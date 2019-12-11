@@ -22,7 +22,7 @@ function varargout = SurPro(varargin)
 
 % Edit the above text to modify the response to help SurPro
 
-% Last Modified by GUIDE v2.5 15-Nov-2019 10:41:53
+% Last Modified by GUIDE v2.5 10-Dec-2019 14:43:21
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -52,45 +52,38 @@ function SurPro_OpeningFcn(hObject, eventdata, handles, varargin)
 % handles    structure with handles and user data (see GUIDATA)
 % varargin   command line arguments to SurPro (see VARARGIN)
 
-%Constant for the referance for that month can be entered here
-%Wheel path 1 ref
-Ref_wheel1=num2cell(repmat(70.24789,15,1));
+%% Wheel Path 1 Refrence from our SurPro (Date - November 2019)
+Ref_wheel1=num2cell(repmat(70.41201,12,1));
+
+data_wheel1=get(handles.uitable1,'Data');
+data_wheel1(:,2)=Ref_wheel1;
+set(handles.uitable1,'Data', data_wheel1);
 
 
-%Constant for the referance for that month can be entered here
-%Wheel path 2 ref
-Ref_wheel2=num2cell(repmat(40.89488,15,1));
+%%Wheel Path 2 Refrence from our SurPro ( Date - November 2019)
+Ref_wheel2=num2cell(repmat(40.89488,12,1));
 
-data_wheel2=get(handles.Uitable2,'Data');
+data_wheel2=get(handles.uitable2,'Data');
 data_wheel2(:,2)=Ref_wheel2;
-set(handles.Uitable2,'Data', data_wheel2);
+set(handles.uitable2,'Data', data_wheel2);
 
 
-%Constant for the referance for that month can be entered here
-%Wheel path 3 ref
+%% Wheel Path 3 Refrence from our SurPro ( Date - November 2019)
+Ref_wheel3=num2cell(repmat(93.51557,12,1));
 
-Ref_wheel3=num2cell(repmat(93.51557,15,1));
-
-data_wheel3=get(handles.Uitable3,'Data');
+data_wheel3=get(handles.uitable3,'Data');
 data_wheel3(:,2)=Ref_wheel3;
-set(handles.Uitable3,'Data', data_wheel3);
+set(handles.uitable3,'Data', data_wheel3);
 
+%% Wheel Path 4 Refrence from our SurPro ( Date - November 2019)
 
-%Constant for the referance for that month can be entered here
-%Wheel path 4 ref
+Ref_wheel4=num2cell(repmat(154.687,12,1));
 
-
-Ref_wheel4=num2cell(repmat(154.6785,15,1));
-
-data_wheel4=get(handles.Uitable4,'Data');
+data_wheel4=get(handles.uitable4,'Data');
 data_wheel4(:,2)=Ref_wheel4;
-set(handles.Uitable4,'Data', data_wheel4);
+set(handles.uitable4,'Data', data_wheel4);
 
-% Choose default command line output for SurPro
-handles.output = hObject;
 
-% Update handles structure
-guidata(hObject, handles);
 
 % UIWAIT makes SurPro wait for user response (see UIRESUME)
 % uiwait(handles.figure1);
@@ -104,14 +97,15 @@ function varargout = SurPro_OutputFcn(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 % Get default command line output from handles structure
-varargout{1} = handles.output;
 
 
 % --- Executes during object creation, after setting all properties.
 function uitable1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to Uitable1 (see GCBO)
+% hObject    handle to uitable1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+
 
 
 
@@ -121,6 +115,34 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % hObject    handle to pushbutton1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
+
+%% Wheel Path  Calculations code
+tableData = get(handles.uitable1, 'Data');
+WP1=cell2mat(tableData(:,1));
+
+avg_WP1=mean(WP1);
+std_WP1=std(WP1);
+data_WP1=[avg_WP1;std_WP1];
+
+
+tableData = get(handles.uitable2, 'Data');
+WP2=cell2mat(tableData(:,2));
+
+avg_WP2=mean(WP2);
+std_WP2=std(WP2);
+data_WP2=[avg_WP2;std_WP2];
+
+
+table5_data=[data_WP1,data_WP2];
+
+set(handles.uitable5,'Data',table5_data)
+function texto_Callback(hObject, eventdata, handles)
+edit=get(hObject,'string');
+set(handles.slider,'value',str2num(edit));
+guidata(hObject,handles); 
+
+
+
 
 
 
@@ -350,16 +372,16 @@ function edit3_Callback(hObject, eventdata, handles)
 %        str2double(get(hObject,'String')) returns contents of edit3 as a double
 
 
-% --- Executes when entered data in editable cell(s) in Uitable1.
+% --- Executes when entered data in editable cell(s) in uitable1.
 function uitable1_CellEditCallback(hObject, eventdata, handles)
-% hObject    handle to Uitable1 (see GCBO)
+% hObject    handle to uitable1 (see GCBO)
 % eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)
 %	Indices: row and column indices of the cell(s) edited
 %	PreviousData: previous data for the cell(s) edited
 %	EditData: string(s) entered by the user
 %	NewData: EditData or its converted form set on the Data property. Empty if Data was not changed
 %	Error: error string when failed to convert EditData to appropriate value for Data
-set(handles.Uitable1,'ColumnEditable',true);
+set(handles.uitable1,'ColumnEditable',true);
 
 
 
@@ -390,8 +412,8 @@ function listbox6_KeyPressFcn(hObject, eventdata, handles)
 
 
 % --- Executes during object deletion, before destroying properties.
-function Uitable1_DeleteFcn(hObject, eventdata, handles)
-% hObject    handle to Uitable1 (see GCBO)
+function uitable1_DeleteFcn(hObject, eventdata, handles)
+% hObject    handle to uitable1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
 
@@ -506,9 +528,9 @@ function Uitable4_CellEditCallback(hObject, eventdata, handles)
 set(handles.Uitable4,'ColumnEditable',true);
 
 
-% --- Executes when entered data in editable cell(s) in uitable6.
-function uitable6_CellEditCallback(hObject, eventdata, handles)
-% hObject    handle to uitable6 (see GCBO)
+% --- Executes when entered data in editable cell(s) in uitable7.
+function uitable7_CellEditCallback(hObject, eventdata, handles)
+% hObject    handle to uitable7 (see GCBO)
 % eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)
 %	Indices: row and column indices of the cell(s) edited
 %	PreviousData: previous data for the cell(s) edited
@@ -516,17 +538,17 @@ function uitable6_CellEditCallback(hObject, eventdata, handles)
 %	NewData: EditData or its converted form set on the Data property. Empty if Data was not changed
 %	Error: error string when failed to convert EditData to appropriate value for Data
 % handles    structure with handles and user data (see GUIDATA)
-set(handles.uitable6,'ColumnEditable',true);
+set(handles.uitable7,'ColumnEditable',true);
 
 
-% --- Executes when entered data in editable cell(s) in Uitable1.
+% --- Executes when entered data in editable cell(s) in uitable1.
 function Uitable1_CellEditCallback(hObject, eventdata, handles)
-%%data_wheel1=get(handles.Uitable1,'Data')
+%%data_wheel1=get(handles.uitable1,'Data')
 %data_wheel1(:,3)= data_wheel1{(:,2) - data_wheel1(:,1)}
-%%set(handles.Uitable1,'Data',data_wheel1)
+%%set(handles.uitable1,'Data',data_wheel1)
 
-%set(handles.Uitable1,'Data', data_wheel1);
-% hObject    handle to Uitable1 (see GCBO)
+%set(handles.uitable1,'Data', data_wheel1);
+% hObject    handle to uitable1 (see GCBO)
 % eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)
 %	Indices: row and column indices of the cell(s) edited
 %	PreviousData: previous data for the cell(s) edited
@@ -540,6 +562,45 @@ function Uitable1_CellEditCallback(hObject, eventdata, handles)
 
 % --- Executes during object creation, after setting all properties.
 function Uitable1_CreateFcn(hObject, eventdata, handles)
-% hObject    handle to Uitable1 (see GCBO)
+% hObject    handle to uitable1 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+
+% --- Executes when selected cell(s) is changed in uitable1.
+function uitable1_CellSelectionCallback(hObject, eventdata, handles)
+% hObject    handle to uitable1 (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)
+%	Indices: row and column indices of the cell(s) currently selecteds
+% handles    structure with handles and user data (see GUIDATA)
+
+
+
+function edit8_Callback(hObject, eventdata, handles)
+% hObject    handle to edit8 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+% Hints: get(hObject,'String') returns contents of edit8 as text
+%        str2double(get(hObject,'String')) returns contents of edit8 as a double
+
+
+% --- Executes during object creation, after setting all properties.
+function edit8_CreateFcn(hObject, eventdata, handles)
+% hObject    handle to edit8 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    empty - handles not created until after all CreateFcns called
+
+% Hint: edit controls usually have a white background on Windows.
+%       See ISPC and COMPUTER.
+if ispc && isequal(get(hObject,'BackgroundColor'), get(0,'defaultUicontrolBackgroundColor'))
+    set(hObject,'BackgroundColor','white');
+end
+
+
+% --- If Enable == 'on', executes on mouse press in 5 pixel border.
+% --- Otherwise, executes on mouse press in 5 pixel border or over pushbutton1.
+function pushbutton1_ButtonDownFcn(hObject, eventdata, handles)
+% hObject    handle to pushbutton1 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
