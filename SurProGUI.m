@@ -22,7 +22,7 @@ function varargout = SurProGUI(varargin)
 
 % Edit the above text to modify the response to help SurProGUI
 
-% Last Modified by GUIDE v2.5 13-Dec-2019 10:36:38
+% Last Modified by GUIDE v2.5 28-Jan-2020 10:23:27
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -124,23 +124,27 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 
 %% Wheel Path  Calculations code
 tableData = get(handles.uitable1, 'Data');
-WP1=cell2mat(tableData(:,1));
-
+WP1=str2double(tableData(:,1));
+WP1 = WP1(~isnan(WP1));
 avg_WP1=mean(WP1);
 std_WP1=std(WP1);
-data_WP1=[avg_WP1;std_WP1];
+cov_WP1=std_WP1./avg_WP1.*100;
+ref_WP1=tableData{1,2};
+abs_diff_WP1=abs(WP1-ref_WP1)
+avg_diff_WP1=mean(abs_diff_WP1);
+percent_diff_WP1=avg_diff_WP1./ref_WP1.*100;
+surpro_temp_WP1=(mean.tableData{1,4});
+
+data_WP1=[avg_WP1;std_WP1;cov_WP1;avg_diff_WP1;percent_diff_WP1;surpro_temp_WP1];
+
+
+
 
 
 tableData = get(handles.uitable2, 'Data');
 WP2=cell2mat(tableData(:,2));
 
-avg_WP2=mean(WP2);
-std_WP2=std(WP2);
-data_WP2=[avg_WP2;std_WP2];
-
-
-table5_data=[data_WP1,data_WP2];
-
+table5_data=[data_WP1];
 set(handles.uitable5,'Data',table5_data)
 function texto_Callback(hObject, eventdata, handles)
 edit=get(hObject,'string');
@@ -718,3 +722,18 @@ function uitable4_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to uitable4 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+
+% --- Executes when selected cell(s) is changed in uitable5.
+function uitable5_CellSelectionCallback(hObject, eventdata, handles)
+% hObject    handle to uitable5 (see GCBO)
+% eventdata  structure with the following fields (see MATLAB.UI.CONTROL.TABLE)
+%	Indices: row and column indices of the cell(s) currently selecteds
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --------------------------------------------------------------------
+function uitable5_ButtonDownFcn(hObject, eventdata, handles)
+% hObject    handle to uitable5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
