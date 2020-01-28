@@ -133,7 +133,7 @@ ref_WP1=tableData{1,2};
 abs_diff_WP1=abs(WP1-ref_WP1)
 avg_diff_WP1=mean(abs_diff_WP1);
 percent_diff_WP1=avg_diff_WP1./ref_WP1.*100;
-surpro_temp_WP1=(mean.tableData{1,4});
+
 
 data_WP1=[avg_WP1;std_WP1;cov_WP1;avg_diff_WP1;percent_diff_WP1;surpro_temp_WP1];
 
