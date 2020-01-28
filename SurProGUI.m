@@ -123,6 +123,9 @@ function pushbutton1_Callback(hObject, eventdata, handles)
 % handles    structure with handles and user data (see GUIDATA)
 
 %% Wheel Path  Calculations code
+
+%%Wheel Path 1 Results code from UiTable 1%% 
+
 tableData = get(handles.uitable1, 'Data');
 WP1=str2double(tableData(:,1));
 WP1 = WP1(~isnan(WP1));
@@ -134,18 +137,99 @@ abs_diff_WP1=abs(WP1-ref_WP1)
 avg_diff_WP1=mean(abs_diff_WP1);
 percent_diff_WP1=avg_diff_WP1./ref_WP1.*100;
 
+idk=str2double(tableData(:,4));
+idk=idk(~isnan(idk));
+surpro_temp_WP1=mean(idk)
 
-data_WP1=[avg_WP1;std_WP1;cov_WP1;avg_diff_WP1;percent_diff_WP1;surpro_temp_WP1];
+idk=str2double(tableData(:,5));
+idk=idk(~isnan(idk));
+kestral_temp_WP1=mean(idk)
 
 
 
 
+data_WP1=[avg_WP1;std_WP1;cov_WP1;avg_diff_WP1;percent_diff_WP1;surpro_temp_WP1;kestral_temp_WP1];
+
+%%Wheel Path 2 Results code from UITable2
 
 tableData = get(handles.uitable2, 'Data');
-WP2=cell2mat(tableData(:,2));
+WP2=str2double(tableData(:,1));
+WP2 = WP2(~isnan(WP2));
+avg_WP2=mean(WP2);
+std_WP3=std(WP2);
+cov_WP2=std_WP3./avg_WP2.*100;
+ref_WP2=tableData{2,2};
+abs_diff_WP2=abs(WP2-ref_WP2)
+avg_diff_WP2=mean(abs_diff_WP2);
+percent_diff_WP2=avg_diff_WP2./ref_WP2.*100;
 
-table5_data=[data_WP1];
+idk=str2double(tableData(:,4));
+idk=idk(~isnan(idk));
+surpro_temp_WP3=mean(idk)
+
+idk=str2double(tableData(:,5));
+idk=idk(~isnan(idk));
+kestral_temp_WP2=mean(idk)
+
+data_WP2=[avg_WP2;std_WP3;cov_WP2;avg_diff_WP2;percent_diff_WP2;surpro_temp_WP3;kestral_temp_WP2];
+
+
+
+%Wheel Path 3 Results code from UITable3
+
+tableData = get(handles.uitable3, 'Data');
+WP3=str2double(tableData(:,1));
+WP3 = WP3(~isnan(WP3));
+avg_WP3=mean(WP3);
+std_WP3=std(WP3);
+cov_WP3=std_WP3./avg_WP3.*100;
+ref_WP3=tableData{2,2};
+abs_diff_WP3=abs(WP3-ref_WP3)
+avg_diff_WP3=mean(abs_diff_WP3);
+percent_diff_WP3=avg_diff_WP3./ref_WP3.*100;
+
+idk=str2double(tableData(:,4));
+idk=idk(~isnan(idk));
+surpro_temp_WP3=mean(idk)
+
+idk=str2double(tableData(:,5));
+idk=idk(~isnan(idk));
+kestral_temp_WP3=mean(idk)
+
+data_WP3=[avg_WP3;std_WP3;cov_WP3;avg_diff_WP3;percent_diff_WP3;surpro_temp_WP3;kestral_temp_WP3];
+
+
+%Wheel Path 4 Results code from UITable4
+
+tableData = get(handles.uitable4, 'Data');
+WP4=str2double(tableData(:,1));
+WP4 = WP4(~isnan(WP4));
+avg_WP4=mean(WP4);
+std_WP4=std(WP4);
+cov_WP4=std_WP4./avg_WP4.*100;
+ref_WP4=tableData{2,2};
+abs_diff_WP4=abs(WP4-ref_WP4)
+avg_diff_WP4=mean(abs_diff_WP4);
+percent_diff_WP4=avg_diff_WP4./ref_WP4.*100;
+
+idk=str2double(tableData(:,4));
+idk=idk(~isnan(idk));
+surpro_temp_WP4=mean(idk)
+
+idk=str2double(tableData(:,5));
+idk=idk(~isnan(idk));
+kestral_temp_WP4=mean(idk)
+
+data_WP4=[avg_WP4;std_WP4;cov_WP4;avg_diff_WP4;percent_diff_WP4;surpro_temp_WP4;kestral_temp_WP4];
+
+
+%Table 5 results getting the data 
+
+
+table5_data=[data_WP1,data_WP2,data_WP3,data_WP4];
 set(handles.uitable5,'Data',table5_data)
+
+
 function texto_Callback(hObject, eventdata, handles)
 edit=get(hObject,'string');
 set(handles.slider,'value',str2num(edit));
