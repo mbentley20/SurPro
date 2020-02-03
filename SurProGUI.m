@@ -22,7 +22,7 @@ function varargout = SurProGUI(varargin)
 
 % Edit the above text to modify the response to help SurProGUI
 
-% Last Modified by GUIDE v2.5 28-Jan-2020 10:23:27
+% Last Modified by GUIDE v2.5 03-Feb-2020 09:49:59
 
 % Begin initialization code - DO NOT EDIT
 gui_Singleton = 1;
@@ -171,6 +171,13 @@ idk=str2double(tableData(:,5));
 idk=idk(~isnan(idk));
 kestral_temp_WP2=mean(idk)
 
+%%if cov_WP2 >=3 
+    'Fail'
+%%end 
+
+%%vpass_or_fail_WP2=
+
+
 data_WP2=[avg_WP2;std_WP3;cov_WP2;avg_diff_WP2;percent_diff_WP2;surpro_temp_WP3;kestral_temp_WP2];
 
 
@@ -219,6 +226,8 @@ surpro_temp_WP4=mean(idk)
 idk=str2double(tableData(:,5));
 idk=idk(~isnan(idk));
 kestral_temp_WP4=mean(idk)
+
+
 
 data_WP4=[avg_WP4;std_WP4;cov_WP4;avg_diff_WP4;percent_diff_WP4;surpro_temp_WP4;kestral_temp_WP4];
 
@@ -517,6 +526,11 @@ function uitable5_CreateFcn(hObject, eventdata, handles)
 % hObject    handle to uitable5 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    empty - handles not created until after all CreateFcns called
+
+A=rand(1,8);
+th=uitable5('Data', A);
+A(1,:)=[];
+set(th, 'Data', A);
 
 
 % --- Executes during object creation, after setting all properties.
@@ -818,6 +832,13 @@ function uitable5_CellSelectionCallback(hObject, eventdata, handles)
 
 % --------------------------------------------------------------------
 function uitable5_ButtonDownFcn(hObject, eventdata, handles)
+% hObject    handle to uitable5 (see GCBO)
+% eventdata  reserved - to be defined in a future version of MATLAB
+% handles    structure with handles and user data (see GUIDATA)
+
+
+% --- Executes during object deletion, before destroying properties.
+function uitable5_DeleteFcn(hObject, eventdata, handles)
 % hObject    handle to uitable5 (see GCBO)
 % eventdata  reserved - to be defined in a future version of MATLAB
 % handles    structure with handles and user data (see GUIDATA)
